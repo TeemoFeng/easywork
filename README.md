@@ -1,0 +1,2 @@
+# easywork
+easywork是一个项目管理系统，在EasyWork开源项目基础上修改了部分功能

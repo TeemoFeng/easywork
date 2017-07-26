@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS `#@_worklog_table`;
+CREATE TABLE `#@_worklog_table` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `status` smallint(4) NOT NULL DEFAULT '0',
+  `worktime` float NOT NULL DEFAULT '0',
+  `description` text NOT NULL,
+  `addtime` date NOT NULL DEFAULT '0000-00-00',
+  `uptime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `addtime` (`addtime`) USING BTREE,
+  KEY `status` (`status`) USING BTREE,
+  KEY `user_id` (`user_id`) USING BTREE,
+  KEY `task_id` (`task_id`) USING BTREE,
+  KEY `uptime` (`uptime`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -1,0 +1,58 @@
+DROP TABLE IF EXISTS `#@_linkage`;
+CREATE TABLE `#@_linkage` (
+  `id` smallint(4) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `_parentId` smallint(4) NOT NULL DEFAULT '0' COMMENT '上级ID',
+  `text` char(35) NOT NULL DEFAULT '' COMMENT '名称',
+  `val` varchar(120) NOT NULL DEFAULT '' COMMENT '值',
+  `code` varchar(60) NOT NULL DEFAULT '' COMMENT '名称拼音',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+  `sort` smallint(4) NOT NULL DEFAULT '50' COMMENT '排序',
+  `deep` tinyint(1) NOT NULL DEFAULT '0',
+  `layer` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+REPLACE INTO `#@_linkage` VALUES ('5','0','任务类型','任务类型','renwuleixing','1','1','0','1');
+REPLACE INTO `#@_linkage` VALUES ('6','5','子项目','子项目','zixiangmu','1','1','1','1');
+REPLACE INTO `#@_linkage` VALUES ('7','5','控制账户','控制账户','kongzhizhanghu','1','2','1','1');
+REPLACE INTO `#@_linkage` VALUES ('8','0','任务状态','任务状态','renwuzhuangtai','1','2','0','1');
+REPLACE INTO `#@_linkage` VALUES ('9','8','未开始','<div style=\'background-color: #cf86cf; width:100%; text-align:center;\'>未开始</div>','weikaishi','1','1','1','1');
+REPLACE INTO `#@_linkage` VALUES ('10','8','计划','<div style=\'background-color: #d2ff00; width:100%; text-align:center;\'>计划</div>','jihua','1','2','1','1');
+REPLACE INTO `#@_linkage` VALUES ('11','8','进行中20%','<div style=\'background-color: #9F0; width:100%; text-align:center;\'>进行中20%</div>','jinxingzhong20','1','3','1','1');
+REPLACE INTO `#@_linkage` VALUES ('12','8','进行中40%','<div style=\'background-color: #9F0; width:100%; text-align:center;\'>进行中40%</div>','jinxingzhong40','1','4','1','1');
+REPLACE INTO `#@_linkage` VALUES ('13','8','进行中60%','<div style=\'background-color: #9F0; width:100%; text-align:center;\'>进行中60%</div>','jinxingzhong60','1','5','1','1');
+REPLACE INTO `#@_linkage` VALUES ('14','0','查看权限','查看权限','chakanquanxian','1','3','0','1');
+REPLACE INTO `#@_linkage` VALUES ('15','14','相关客户','相关客户','gongkai','1','3','1','1');
+REPLACE INTO `#@_linkage` VALUES ('16','14','内部所有人','内部所有人','yingcang','1','1','1','1');
+REPLACE INTO `#@_linkage` VALUES ('17','14','项目相关人','项目相关人','zhuanan','1','2','1','1');
+REPLACE INTO `#@_linkage` VALUES ('18','0','严重程度','严重程度','yanzhongchengdu','1','4','0','1');
+REPLACE INTO `#@_linkage` VALUES ('21','0','项目状态','项目状态','xiangmuzhuangtai','1','5','0','1');
+REPLACE INTO `#@_linkage` VALUES ('22','0','优先级','优先级','youxianji','1','6','0','1');
+REPLACE INTO `#@_linkage` VALUES ('24','18','极低','极低','jidi','1','2','1','1');
+REPLACE INTO `#@_linkage` VALUES ('25','18','低','低','di','1','3','1','1');
+REPLACE INTO `#@_linkage` VALUES ('26','18','中','中','zhong','1','4','1','1');
+REPLACE INTO `#@_linkage` VALUES ('27','18','高','高','gao','1','5','1','1');
+REPLACE INTO `#@_linkage` VALUES ('35','22','极低','极低','jidi','1','2','1','1');
+REPLACE INTO `#@_linkage` VALUES ('36','22','低','低','di','1','3','1','1');
+REPLACE INTO `#@_linkage` VALUES ('37','22','中','中','zhong','1','4','1','1');
+REPLACE INTO `#@_linkage` VALUES ('38','22','高','高','gao','1','5','1','1');
+REPLACE INTO `#@_linkage` VALUES ('39','22','急紧','急紧','jijin','1','6','1','1');
+REPLACE INTO `#@_linkage` VALUES ('46','8','进行中80%','<div style=\'background-color: #9F0; width:100%; text-align:center;\'>进行中80%</div>','jinxingzhong80','1','6','1','1');
+REPLACE INTO `#@_linkage` VALUES ('47','8','调试','<div style=\'background-color: #83a6fe; width:100%; text-align:center;\'>调试</div>','jinxingzhong100','1','7','1','1');
+REPLACE INTO `#@_linkage` VALUES ('48','8','中断','<div style=\'background-color: #ccc; width:100%; text-align:center;\'>中断</div>','zhongduan','1','13','1','1');
+REPLACE INTO `#@_linkage` VALUES ('49','8','推迟','<div style=\'background-color: #00ffae; width:100%; text-align:center;\'>推迟</div>','tuichi','1','9','1','1');
+REPLACE INTO `#@_linkage` VALUES ('51','8','完成验收','<div style=\'background-color: #fb7575; width:100%; text-align:center;\'>完成验收</div>','wanchengyanshou','1','11','1','1');
+REPLACE INTO `#@_linkage` VALUES ('52','8','驳回','<div style=\'background-color: #97d38b; width:100%; text-align:center;\'>驳回</div>','bohui','1','12','1','1');
+REPLACE INTO `#@_linkage` VALUES ('53','5','项目管理','项目管理','xiangmuguanli','1','3','1','1');
+REPLACE INTO `#@_linkage` VALUES ('54','5','产品设计','产品设计','chanpinsheji','1','4','1','1');
+REPLACE INTO `#@_linkage` VALUES ('55','5','开发','开发','kaifa','1','5','1','1');
+REPLACE INTO `#@_linkage` VALUES ('56','5','Bug','Bug','bug','1','6','1','1');
+REPLACE INTO `#@_linkage` VALUES ('57','5','测试','测试','ceshi','1','7','1','1');
+REPLACE INTO `#@_linkage` VALUES ('58','5','撰写文档','撰写文档','zhuanxiewendang','1','8','1','1');
+REPLACE INTO `#@_linkage` VALUES ('59','5','需求调研','需求调研','xuqiu','1','9','1','1');
+REPLACE INTO `#@_linkage` VALUES ('60','5','会议','会议','huiyi','1','10','1','1');
+REPLACE INTO `#@_linkage` VALUES ('62','5','加班','加班','jiaban','1','12','1','1');
+REPLACE INTO `#@_linkage` VALUES ('63','5','其它','其它','qita','1','13','1','1');
+REPLACE INTO `#@_linkage` VALUES ('64','18','严重','严重','yanzhong','1','6','1','1');
+REPLACE INTO `#@_linkage` VALUES ('65','21','已结束','<div style=\'background-color: #97d38b; width:100%; text-align:center;\'>已结束</div>','xmyjs','1','51','1','1');
+REPLACE INTO `#@_linkage` VALUES ('66','21','已中断','<div style=\'background-color: #ccc; width:100%; text-align:center;\'>已中断</div>','xmzd','1','53','1','1');
+REPLACE INTO `#@_linkage` VALUES ('67','21','已推迟','<div style=\'background-color: #00ffae; width:100%; text-align:center;\'>已推迟</div>','tc','1','50','1','1');

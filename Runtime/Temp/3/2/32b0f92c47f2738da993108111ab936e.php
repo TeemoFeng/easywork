@@ -1,0 +1,3 @@
+<?php
+//000000000000s:447:"SELECT t1.id as id,t1.title as t1_old_title,t1.user_id as t1_old_user_id,t2.username as t2_old_username,if(t1.content<>'',t1.content,'无') as t1_old_content,t1.status as t1_old_status,case t1.status when '1' then '顶置' when '2' then '上线' else '下线' end as t1_new_status,t1.addtime as t1_old_addtime FROM dwin_notice_table as t1 LEFT JOIN  dwin_user_table as t2 on t2.id = t1.user_id HAVING id>0 ORDER BY t1_old_addtime desc LIMIT 0,50  ";
+?>

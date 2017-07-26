@@ -1,0 +1,45 @@
+<script language="javascript">
+function onResetFileDetail(idd){
+	cancel['FileDetail'].dialog('destroy');
+	cancel['FileDetail'].dialog('close');
+	cancel['FileDetail'] = null;
+}
+
+function onExcel(id){
+	window.location = "__URL__/word/id/"+id;
+}
+
+function onDown(id){
+	window.location = "__URL__/down/id/"+id;
+}
+</script>
+
+<div class="con-tb">
+<form method="post" enctype="multipart/form-data" class="add-filedetail" id="addFormFileDetail{$uniqid}">
+ <table width="100%" class="infobox linebox reportbox" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
+ 	  <tr>
+        <td width="15%" class="rebg"><label>文档名</label></td>
+        <td>{$info.title} &nbsp;&nbsp; <a class="font1_color" href="javascript:onExcel({$info.id})">导出Word</a></td>
+      </tr>
+      <tr>
+        <td width="15%" class="rebg"><label>附件</label></td>
+        <td>
+          <if condition="$info['path']">
+            <a href="javascript:onDown({$info.id});"  class="up-font-over"><img src="__ITEM__/__ADMIN.IMG__/files.png" /> 下载</a>
+            <else />
+            <font style="color:#999;"><img src="__ITEM__/__ADMIN.IMG__/files.png" /> 下载</font>
+          </if>
+        </td>
+      </tr>
+      <tr>
+        <td width="15%" height="80" class="rebg"><label>內容</label></td>
+        <td>{$info.description}</td>
+      </tr>
+     <tr>
+        <td height="38" colspan="2" align="center">
+        <a href="javascript:void(0);" onclick="javascript:onResetFileDetail('{$uniqid}')" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+        </td>
+     </tr>   
+  </table>
+</form>
+</div>

@@ -1,0 +1,47 @@
+
+ <div class="easyui-layout" data-options="fit:true" style="height: 100%">   <!--layout布局-->
+    <div data-options="region:'west',border:false" style="width:248px">  <!--西区显示项目列表-->
+     <div id="leftTask" class="easyui-accordion" style="width:238px;">
+	  <div title="项目任务分解" data-options="selected:true">   
+       <ul id="taskTree" class="easyui-tree left-tree" data-options="url:'__URL__/getTask/pid/{$id}',editable:false,lines:true,method:'get',onClick:function(node){onClickTask(node);},onLoadSuccess:function(node){onCheckTree();}"></ul>
+      </div> 
+      </div>
+    </div>   
+   <div data-options="region:'center',border:false">
+     <div class="task-right">
+      <if condition="$tid">
+       <div id="proDetailCon" class="easyui-panel panelson" data-options="href:'__URL__/content/id/{$id}/tid/{$tid}',border:false"> </div>
+      <else />
+       <div id="proDetailCon" class="easyui-panel panelson" data-options="href:'__URL__/content/id/{$id}',border:false"> </div>
+      </if> 
+     </div>
+   </div>   
+ </div>
+ <script language="javascript">
+     $(function(){
+         var th = $(".top").height();
+         thh = 111-th;
+         var wh = $(window).height()-th;
+         $("#ProjectDetail").width();
+         $("#leftTask").height(wh); //左侧任务栏的高
+         $(".panelson").height(wh);
+     });
+
+     function onClickTask(node){
+         var idpa = isset(node._parentId);
+         var id = node.id;
+         if(idpa){
+             $("#proDetailCon").panel('refresh','__URL__/content/id/{$id}/tid/'+id);
+         }else{
+             $("#proDetailCon").panel('refresh','__URL__/content/id/'+id);
+         }
+     }
+
+     function onCheckTree(){
+         var tid = '{$tid}';
+         if(tid){
+             var node = $('#taskTree').tree('find',tid);
+             $('#taskTree').tree('check', node.target);
+         }
+     }
+ </script>

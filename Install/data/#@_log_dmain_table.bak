@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS `#@_log_dmain_table`;
+CREATE TABLE `#@_log_dmain_table` (
+  `id` bigint(15) NOT NULL AUTO_INCREMENT,
+  `log_id` int(11) NOT NULL DEFAULT '0',
+  `pro_id` int(8) NOT NULL DEFAULT '0',
+  `task_id` int(8) NOT NULL DEFAULT '0',
+  `worklog_id` int(11) NOT NULL DEFAULT '0',
+  `files_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `log_id` (`log_id`) USING BTREE,
+  KEY `pro_id` (`pro_id`) USING BTREE,
+  KEY `task_id` (`task_id`) USING BTREE,
+  KEY `worklog_id` (`worklog_id`) USING BTREE,
+  KEY `files_id` (`files_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

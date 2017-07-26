@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS `#@_task_baseinfo_table`;
+CREATE TABLE `#@_task_baseinfo_table` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `task_id` mediumint(8) NOT NULL DEFAULT '0',
+  `content` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `task_id` (`task_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

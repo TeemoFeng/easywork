@@ -1,0 +1,129 @@
+<script language="javascript">
+var role = '{$role}';
+if(role==-2){
+	cancel['DirAdd'].dialog('destroy');
+	cancel['DirAdd'].dialog('close');
+	cancel['DirAdd'] = null;
+	$.messager.alert('提示','您没有新增权限！','warning');
+}else if(role==-3){
+	cancel['DirAdd'].dialog('destroy');
+	cancel['DirAdd'].dialog('close');
+	cancel['DirAdd'] = null;
+	$.messager.alert('提示','您没有編輯權限！','warning');
+}
+function onSubmitDir(idd){
+	var dc = $("#description"+idd).val();
+	if(dc){
+		$.messager.progress();
+		$("#addFormDir"+idd).form('submit',{
+			url:'__URL__/dir/act/add/go/1/',
+			onSubmit: function(){
+				var isValid = $(this).form('validate');
+				if (!isValid){
+					$.messager.progress('close');
+				}
+				return isValid;
+			},
+			success:function(data){
+				$.messager.progress('close');
+				if(data==1){
+					$.messager.alert('提示','新增数据成功！','info',function(){
+						var sa = '{$TC.config.SUBMIT_ACTION}';
+						$("#proDetailCon").panel('refresh');
+						$("#filesIndexList"+cancel['FilesUniqid']).datagrid('reload');
+						if(sa==1){
+							cancel['FilesUniqid'] = null;
+							cancel['DirAdd'].dialog('destroy');
+							cancel['DirAdd'].dialog('close');
+							cancel['DirAdd'] = null;
+						}
+					});
+				}else if(data==0){
+					$.messager.alert('提示','新增数据失败！','warning');
+				}else{
+					//alert(data);
+					$.messager.alert('提示','您没有新增权限！','warning',function(){
+						var sa = '{$TC.config.SUBMIT_ACTION}';
+						if(sa==1){
+							cancel['FilesUniqid'] = null;
+							cancel['DirAdd'].dialog('destroy');
+							cancel['DirAdd'].dialog('close');
+							cancel['DirAdd'] = null;
+						}
+					});
+				}
+			}
+		});
+	}
+}
+
+function onUploadDir(idd){
+	$.messager.progress();
+	$("#addFormDir"+idd).form('submit',{
+		url:'__URL__/dir/act/edit/go/1',
+		onSubmit: function(){
+			var isValid = $(this).form('validate');
+			if (!isValid){
+				$.messager.progress('close');
+			}
+			return isValid;
+		},
+		success:function(data){
+			$.messager.progress('close');
+			if(data==1){
+				$.messager.alert('提示','更新数据成功！','info',function(){
+					var sa = '{$TC.config.SUBMIT_ACTION}';
+					$("#proDetailCon").panel('refresh');
+					$("#filesIndexList"+cancel['FilesUniqid']).datagrid('reload');
+					if(sa==1){
+						cancel['FilesUniqid'] = null;
+						cancel['DirAdd'].dialog('destroy');
+						cancel['DirAdd'].dialog('close');
+						cancel['DirAdd'] = null;
+					}
+				});
+			}else if(data==0){
+				$.messager.alert('提示','更新数据失败！','warning');
+			}else{
+				//alert(data);
+				$.messager.alert('提示','您没有更新权限！','warning',function(){
+					var sa = '{$TC.config.SUBMIT_ACTION}';
+					if(sa==1){
+						cancel['FilesUniqid'] = null;
+						cancel['DirAdd'].dialog('destroy');
+						cancel['DirAdd'].dialog('close');
+						cancel['DirAdd'] = null;
+					}
+				});
+			}
+		}
+	});
+}
+
+function onResetDir(idd){
+	cancel['FilesUniqid'] = null;
+	cancel['DirAdd'].dialog('destroy');
+	cancel['DirAdd'].dialog('close');
+	cancel['DirAdd'] = null;
+}
+</script>
+
+<div class="con-tb">
+<form class="add-dir" id="addFormDir{$uniqid}" method="post">
+ <table width="100%" class="infobox linebox reportbox" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
+      <tr>
+        <td width="16%" class="rebg"><label>文件名</label><if condition="$act=='add'"><input name="pro_id" type="hidden" value="{$id}" /><input name="task_id" type="hidden" value="{$tid}" /><input name="parent_id" type="hidden" value="{$paid}" /></else /><input name="pro_id" type="hidden" value="{$info.main.pro_id}" /><input name="task_id" type="hidden" value="{$info.main.task_id}" /></if><input name="files_id" type="hidden" value="{$info.id}" /></td>
+        <td width="84%"><input name="title" type="text" class="easyui-validatebox" style="width:99%;" value="{$info.title}" /></td>
+      </tr>
+      <tr>
+        <td width="16%" class="rebg"><label>描述</label></td>
+        <td><textarea name="description" id="description{$uniqid}"  rows="5" class="easyui-validatebox" style="width:99%;">{$info.description}</textarea></td>
+      </tr>
+     <tr>
+        <td height="38" colspan="2" align="center">
+        <if condition="$act=='add'"><a href="javascript:void(0);" onclick="javascript:onSubmitDir('{$uniqid}')" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a><else /><a href="javascript:void(0);" onclick="javascript:return onUploadDir('{$uniqid}')" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a></if> &nbsp; <a href="javascript:void(0);" onclick="javascript:onResetDir('{$uniqid}')" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+        </td>
+     </tr>   
+  </table>
+</form>
+</div>

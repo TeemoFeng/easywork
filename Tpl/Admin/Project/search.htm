@@ -1,0 +1,56 @@
+<script language="javascript">
+var idd = '';
+function onSend(idd){
+	$.messager.progress();
+	$("#searchFormProject"+idd).form('submit',{
+		url:'__URL__/search/act/1',
+		success:function(data){
+			//alert($("#keys").val());
+			$.messager.progress('close');
+			$("#Project").datagrid('reload');
+			var sa = '{$TC.config.SEARCH_ACTION}';
+			if(sa==1){
+				$("#searchProject").dialog('close',true);
+			}
+		}
+	});
+}
+
+$(function(){
+	$("#keywordProject{$uniqid}").combobox({
+		filter:function(q,r){
+			$("#keyProject{$uniqid}").val(q);
+			var opts = $(this).combobox('options');
+			var v = r[opts.textField];
+			var vp = ','+String(getPinYin(v));
+			var qp = ','+q.toUpperCase();
+			if(vp.indexOf(qp)>=0 || v.indexOf(q) == 0){
+				return r[opts.textField];
+			}
+		},
+		onSelect:function(c){
+			$("#keyProject{$uniqid}").val(c['id']);
+			//alert($("#keys").val());
+		}
+	});
+});
+</script>
+<div class="con-tb">
+<form id="searchFormProject{$uniqid}" method="post">
+ <table class="infobox" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="100%" height="41"><input name="field" type="hidden" value="<?php echo $field ?>" /><select class="easyui-combobox" name="mod" data-options="editable:false">  
+        <option value="=">等于</option>  
+        <option  value="like">包含</option>
+        <option  value=">">大于</option>
+        <option  value="<">小于</option>
+        <option  value=">=">大于等于</option>
+        <option  value="<=">小于等于</option> 
+        <option  value="<>">不等于</option>  
+        <option  value="not like">不包含</option>
+    </select>&nbsp;<input name="keyword" id="keywordProject{$uniqid}" class="easyui-combobox relo" size="38" data-options="url:'__URL__/search/field/<?php echo $field ?>/json/1',editable:true,method:'get',valueField:'id',textField:'text'" />
+<input name="keyproject" id="keyProject{$uniqid}" type="hidden" value="" />&nbsp;<a href="#" onclick="javascript:onSend('{$uniqid}')" id="su" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a></td>
+  </tr>
+ </table>
+</form>
+</div>

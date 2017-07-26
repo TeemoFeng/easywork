@@ -1,0 +1,19 @@
+DROP TABLE IF EXISTS `#@_log_destroy_table`;
+CREATE TABLE `#@_log_destroy_table` (
+  `id` bigint(15) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `type` tinyint(1) NOT NULL DEFAULT '0',
+  `mode` tinyint(1) NOT NULL DEFAULT '0',
+  `usage` char(12) NOT NULL DEFAULT '',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `notes` char(60) NOT NULL DEFAULT '',
+  `description` varchar(200) NOT NULL DEFAULT '',
+  `addtime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `workdate` date NOT NULL DEFAULT '0000-00-00',
+  `pro_id` mediumint(8) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`) USING BTREE,
+  KEY `type` (`type`) USING BTREE,
+  KEY `pro_id` (`pro_id`) USING BTREE,
+  KEY `mode` (`mode`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

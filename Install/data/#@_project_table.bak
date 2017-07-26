@@ -1,0 +1,19 @@
+﻿DROP TABLE IF EXISTS `#@_project_table`;
+CREATE TABLE `#@_project_table` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `pm_id` int(11) NOT NULL DEFAULT '0',
+  `client_id` smallint(5) DEFAULT NULL,
+  `status` smallint(4) NOT NULL DEFAULT '0',
+  `views` smallint(4) NOT NULL DEFAULT '0',
+  `title` varchar(65) NOT NULL DEFAULT '',
+  `code` char(12) NOT NULL DEFAULT '',
+  `addtime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `uptime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `keyword` (`title`,`code`) USING BTREE,
+  KEY `status` (`status`) USING BTREE,
+  KEY `uptime` (`uptime`) USING BTREE,
+  KEY `title` (`title`) USING BTREE,
+  KEY `client_id` (`client_id`) USING BTREE,
+  KEY `pm_id` (`pm_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

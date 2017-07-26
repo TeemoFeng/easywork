@@ -1,0 +1,3 @@
+<?php
+//000000000000s:386:"SELECT SQL_CALC_FOUND_ROWS t1.id as id,CONCAT('<img style="vertical-align:middle" src="Skin/Admin/Img/folder.png" />',' <span style="vertical-align:middle">',t1.title) as title,t1.client_id as client_id,t1.views as views,t1.pm_id as user_id,0 as edit_id,t1.id as pro_id,0 as type,t1.uptime as addtime FROM dwin_project_table as t1 HAVING id>0 ORDER BY type asc,addtime desc LIMIT 0,50  ";
+?>

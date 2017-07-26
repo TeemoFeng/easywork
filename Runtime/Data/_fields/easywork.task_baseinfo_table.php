@@ -1,0 +1,1 @@
+<?php	return array ( 0 => 'id', 1 => 'task_id', 2 => 'content', '_autoinc' => true, '_pk' => 'id', '_type' => array ( 'id' => 'int(8)', 'task_id' => 'mediumint(8)', 'content' => 'text', ), );?>

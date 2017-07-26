@@ -1,0 +1,10 @@
+﻿DROP TABLE IF EXISTS `#@_project_baseinfo_table`;
+CREATE TABLE `#@_project_baseinfo_table` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `pro_id` mediumint(8) NOT NULL DEFAULT '0',
+  `startdate` date NOT NULL DEFAULT '0000-00-00',
+  `enddate` date NOT NULL DEFAULT '0000-00-00',
+  `content` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pro_id` (`pro_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

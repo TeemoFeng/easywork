@@ -1,0 +1,161 @@
+<script language="javascript">
+var role = '{$role}';
+if(role==-2){
+	$.messager.alert('提示','您没有新增权限！','warning');
+	cancel['FileAdd'].dialog('destroy');
+	cancel['FileAdd'].dialog('close');
+	cancel['FileAdd'] = null;
+}else if(role==-3){
+	$.messager.alert('提示','您没有编辑权限！','warning');
+	cancel['FileAdd'].dialog('destroy');
+	cancel['FileAdd'].dialog('close');
+	cancel['FileAdd'] = null;
+}
+function onSubmitFile(idd){
+	var dc = $("#description"+idd).val();
+	var ids = $("#ids"+idd).val();
+	//alert(ids);
+	if(dc){
+		$.messager.progress();
+		$("#addFormFile"+idd).form('submit',{
+			url:'__URL__/file/act/add/go/1/id/'+ids,
+			onSubmit: function(){
+				var isValid = $(this).form('validate');
+				if (!isValid){
+					$.messager.progress('close');
+				}
+				return isValid;
+			},
+			success:function(data){
+				$.messager.progress('close');
+				if(data==1){
+					$.messager.alert('提示','新增数据成功！','info',function(){
+						var sa = '{$TC.config.SUBMIT_ACTION}';
+						$("#filesList").datagrid('reload');
+						$("#filesIndexList"+cancel['FilesUniqid']).datagrid('reload');
+						if(sa==1){
+							cancel['FilesUniqid'] = null;
+							cancel['FileAdd'].dialog('destroy');
+							cancel['FileAdd'].dialog('close');
+							cancel['FileAdd'] = null;
+						}
+					});
+				}else if(data==0){
+					$.messager.alert('提示','新增数据失败！','warning');
+				}else if(data==-2){
+					$.messager.alert('提示','您没有新增权限！',function(){
+						var sa = '{$TC.config.SUBMIT_ACTION}';
+						if(sa==1){
+							cancel['FilesUniqid'] = null;
+							cancel['FileAdd'].dialog('destroy');
+							cancel['FileAdd'].dialog('close');
+							cancel['FileAdd'] = null;
+						}
+					});
+				}else{
+					//alert(data);
+					$.messager.alert('提示',data,'warning',function(){
+						var sa = '{$TC.config.SUBMIT_ACTION}';
+						if(sa==1){
+							cancel['FilesUniqid'] = null;
+							cancel['FileAdd'].dialog('destroy');
+							cancel['FileAdd'].dialog('close');
+							cancel['FileAdd'] = null;
+						}
+					});
+				}
+			}
+		});
+	}
+}
+
+function onUploadFile(idd){
+	$.messager.progress();
+	$("#addFormFile"+idd).form('submit',{
+		url:'__URL__/file/act/edit/go/1',
+		onSubmit: function(){
+			var isValid = $(this).form('validate');
+			if (!isValid){
+				$.messager.progress('close');
+			}
+			return isValid;
+		},
+		success:function(data){
+			$.messager.progress('close');
+			if(data==1){
+				$.messager.alert('提示','更新数据成功！','info',function(){
+					var sa = '{$TC.config.SUBMIT_ACTION}';
+					$("#filesList").datagrid('reload');
+					$("#filesIndexList"+cancel['FilesUniqid']).datagrid('reload');
+					if(sa==1){
+						cancel['FilesUniqid'] = null;
+						cancel['FileAdd'].dialog('destroy');
+						cancel['FileAdd'].dialog('close');
+						cancel['FileAdd'] = null;
+					}
+				});
+			}else if(data==-3){
+					$.messager.alert('提示','您没有更新权限！',function(){
+						var sa = '{$TC.config.SUBMIT_ACTION}';
+						if(sa==1){
+							cancel['FilesUniqid'] = null;
+							cancel['FileAdd'].dialog('destroy');
+							cancel['FileAdd'].dialog('close');
+							cancel['FileAdd'] = null;
+						}
+					});
+			}else if(data==0){
+				$.messager.alert('提示','更新数据失败！','warning');
+			}else{
+				//alert(data);
+				$.messager.alert('提示',data,'warning',function(){
+					var sa = '{$TC.config.SUBMIT_ACTION}';
+					if(sa==1){
+						cancel['FilesUniqid'] = null;
+						cancel['FileAdd'].dialog('destroy');
+						cancel['FileAdd'].dialog('close');
+						cancel['FileAdd'] = null;
+					}
+				});
+			}
+		}
+	});
+}
+
+function onResetFile(idd){
+	//debugger;
+	cancel['FilesUniqid'] = null;
+	cancel['FileAdd'].dialog('destroy');
+	cancel['FileAdd'].dialog('close');
+	cancel['FileAdd'] = null;
+}
+</script>
+
+<div class="con-tb">
+<form method="post" enctype="multipart/form-data" class="add-file" id="addFormFile{$uniqid}">
+ <table width="100%" class="infobox linebox reportbox" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
+ 	  <tr>
+        <td width="16%" class="rebg"><label>文件名</label><input id="ids{$uniqid}" type="hidden" value="{$id}" /><input name="files_id" type="hidden" value="{$info.id}" /></td>
+        <td width="84%"><input name="title" type="text" class="easyui-validatebox" style="width:99%;" value="{$info.title}" /></td>
+      </tr>
+      <tr>
+        <td width="16%" class="rebg"><label>附件</label></td>
+        <td width="84%">
+         <input name="path" type="file" />
+         <if condition="$info['path']">
+         <br/>{$info.path}
+         </if>
+        </td>
+      </tr>
+      <tr>
+        <td width="10%" class="rebg"><label>內容</label></td>
+        <td><textarea name="description" id="description{$uniqid}"  rows="18" class="easyui-kindeditor" style="width:99%; height:283px" data-options="uploadJson:'__APP__/Public/Upload/save/'">{$info.description}</textarea></td>
+      </tr>
+     <tr>
+        <td height="38" colspan="2" align="center">
+        <if condition="$act=='add'"><a href="javascript:void(0);" onclick="javascript:onSubmitFile('{$uniqid}')" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a><else /><a href="javascript:void(0);" onclick="javascript:return onUploadFile('{$uniqid}')" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a></if> &nbsp; <a href="javascript:void(0);" onclick="javascript:onResetFile('{$uniqid}')" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+        </td>
+     </tr>   
+  </table>
+</form>
+</div>

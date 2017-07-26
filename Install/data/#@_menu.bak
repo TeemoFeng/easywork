@@ -1,0 +1,43 @@
+﻿DROP TABLE IF EXISTS `#@_menu`;
+CREATE TABLE `#@_menu` (
+  `id` smallint(4) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `_parentId` smallint(4) NOT NULL DEFAULT '0' COMMENT '上级ID',
+  `deep` tinyint(1) NOT NULL DEFAULT '0' COMMENT '深度',
+  `code` char(20) NOT NULL DEFAULT '' COMMENT '识别码',
+  `text` char(35) NOT NULL DEFAULT '' COMMENT '名称',
+  `url` varchar(100) NOT NULL DEFAULT '' COMMENT '连接',
+  `iconCls` char(50) DEFAULT NULL COMMENT '标题图片',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `state` char(6) NOT NULL DEFAULT 'open' COMMENT '状态',
+  `mode` tinyint(1) NOT NULL DEFAULT '1',
+  `type` char(5) NOT NULL DEFAULT '' COMMENT '类型',
+  `level` char(15) NOT NULL DEFAULT '10' COMMENT '权限',
+  `view` text NOT NULL COMMENT '开放用户',
+  `sort` smallint(4) NOT NULL DEFAULT '50' COMMENT '排序',
+  PRIMARY KEY (`id`),
+  KEY `mode` (`mode`) USING BTREE,
+  KEY `states` (`state`,`status`) USING BTREE,
+  KEY `code` (`code`) USING BTREE,
+  KEY `_parentId` (`_parentId`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+REPLACE INTO `#@_menu` VALUES ('1','0','0','','系统管理','','icon-setting','1','open','1','>=','999','','99');
+REPLACE INTO `#@_menu` VALUES ('2','1','1','','基础设置','','','1','open','1','>=','999','','1');
+REPLACE INTO `#@_menu` VALUES ('3','2','2','User','用户管理','/index.php?s=/user/index','','1','open','1','>=','999','','2');
+REPLACE INTO `#@_menu` VALUES ('4','1','1','','系统设置','','','1','open','1','>=','999','','2');
+REPLACE INTO `#@_menu` VALUES ('5','2','2','Group','角色管理','/index.php?s=/group/index','','1','open','1','>=','999','','3');
+REPLACE INTO `#@_menu` VALUES ('6','2','2','Comy','公司管理','/index.php?s=/comy/index','','0','open','1','>=','999','','4');
+REPLACE INTO `#@_menu` VALUES ('7','2','2','Linkage','联动管理','/index.php?s=/linkage/index','','1','open','1','>=','999','','7');
+REPLACE INTO `#@_menu` VALUES ('8','2','2','Part','部门管理','/index.php?s=/part/index','','1','open','1','>=','999','','6');
+REPLACE INTO `#@_menu` VALUES ('9','4','2','Setting','参数设置','/index.php?s=/setting/index','','1','open','1','>=','999','','1');
+REPLACE INTO `#@_menu` VALUES ('10','4','2','Menu','菜单设置','/index.php?s=/menu/index','','1','open','1','>=','9999','','2');
+REPLACE INTO `#@_menu` VALUES ('11','1','1','','系统工具','','','1','open','1','>=','9999','','3');
+REPLACE INTO `#@_menu` VALUES ('12','11','2','Backup','数据备份','/index.php?s=/backup/index','','1','open','1','>=','9999','','1');
+REPLACE INTO `#@_menu` VALUES ('13','0','0','','工作管理','','icon-project','1','open','1','>=','10','','1');
+REPLACE INTO `#@_menu` VALUES ('14','13','1','','项目管理','','','1','open','1','>=','10','','1');
+REPLACE INTO `#@_menu` VALUES ('15','14','2','Log','动态列表','/index.php?s=/log/index','','1','open','1','>=','10','','2');
+REPLACE INTO `#@_menu` VALUES ('16','13','1','','属性管理','','','1','open','1','>=','50','','2');
+REPLACE INTO `#@_menu` VALUES ('18','16','2','Client','客户管理','/index.php?s=/client/index','','1','open','1','>=','50','','2');
+REPLACE INTO `#@_menu` VALUES ('19','14','2','Project','项目列表','/index.php?s=/project/index','','1','open','1','>=','10','','3');
+REPLACE INTO `#@_menu` VALUES ('20','14','2','Files','文档列表','/index.php?s=/files/index','','1','open','1','>=','10','','4');
+REPLACE INTO `#@_menu` VALUES ('21','14','2','Notice','公告列表','/index.php?s=/notice/index','','1','open','1','>=','30','','5');
+REPLACE INTO `#@_menu` VALUES ('22','14','2','Task','任务列表','/index.php?s=/task/index','','1','open','1','>=','10','','1');

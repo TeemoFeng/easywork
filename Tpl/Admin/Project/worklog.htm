@@ -1,0 +1,129 @@
+<script language="javascript">
+var role = '{$role}';
+var act = '{$act}';
+if(role==-2){
+	cancel['Worklog'].dialog('close');
+	cancel['Worklog'] = null;
+	$.messager.alert('提示','您没有新增权限！','warning');
+}
+$(function(){
+	$("#addFormWorklog{$uniqid}").form('load',{
+		'status':'<?php echo $info["status"] ?>',
+		'worktime':'<?php echo $info["worktime"] ?>'
+	});
+	
+	$("#status{$uniqid}").combobox({
+		url:'__ITEM__/__RUNTIME__/Data/Json/Linkage/renwuzhuangtai_data.json',
+		editable:false,
+		method:'get',
+		required:true,
+		valueField:'id',
+		textField:'text',
+		/*onLoadSuccess:function(){
+			if(act=='add'){
+				$("#status{$uniqid}").combobox('setValue',9);
+			}
+		}*/
+	});
+});
+
+var idd = '';
+function onSubmitWorklog(idd){
+	$.messager.progress();
+	$("#addFormWorklog"+idd).form('submit',{
+		url:'__URL__/worklog/act/add/go/1',
+		onSubmit: function(){
+			var isValid = $(this).form('validate');
+			if (!isValid){
+				$.messager.progress('close');
+			}
+			return isValid;
+		},
+		success:function(data){
+			$.messager.progress('close');
+			if(data==1){
+				$.messager.alert('提示','新增数据成功！','info',function(){
+					var sa = '{$TC.config.SUBMIT_ACTION}';
+					$("#proDetailCon").panel('refresh');
+					if(sa==1){
+						cancel['Worklog'].dialog('close');
+						cancel['Worklog'] = null;
+					}
+				});
+			}else if(data==2){
+				$.messager.alert('提示','该任务已审核，不能新增工作日志！','warning');
+			}else if(data==0){
+				$.messager.alert('提示','新增数据失败！','warning');
+			}else{
+				$.messager.alert('提示','您没有新增权限！','warning',function(){
+					var sa = '{$TC.config.SUBMIT_ACTION}';
+					if(sa==1){
+						cancel['Worklog'].dialog('close');
+						cancel['Worklog'] = null;
+					}
+				});
+			}
+		}
+	});
+}
+
+function onUploadWorklog(idd,id){
+	$.messager.progress();
+	$("#addFormWorklog"+idd).form('submit',{
+		url:'__URL__/worklog/act/edit/go/1',
+		onSubmit: function(){
+			var isValid = $(this).form('validate');
+			if (!isValid){
+				$.messager.progress('close');
+			}
+			return isValid;
+		},
+		success:function(data){
+			$.messager.progress('close');
+			if(data==1){
+				$.messager.alert('提示','更新数据成功！','info',function(){
+					cancel['Worklog'].dialog('refresh','__URL__/worklog/act/detail/id/'+id);
+					cancel['Worklog'].dialog('setTitle','工作日志详情');
+					$("#proDetailCon").panel('refresh');
+				});
+				$("#add").dialog('refresh');
+			}else if(data==2){
+				$.messager.alert('提示','该任务已审核，不能更新工作日志！','warning');
+			}else if(data==0){
+				$.messager.alert('提示','更新数据失败！','warning');
+			}else{
+				$.messager.alert('提示','您没有更新权限！','warning');
+			}
+		}
+	});
+}
+
+function onResetWorklog(idd){
+	cancel['Worklog'].dialog('destroy');
+	cancel['Worklog'].dialog('close');
+	cancel['Worklog'] = null;
+}
+</script>
+<div class="con-tb">
+<form class="add-worklog" id="addFormWorklog{$uniqid}" method="post">
+ <table class="infobox" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%"><label for="status">状态</label><input name="worklog_id" type="hidden" value="{$info.id}" /><if condition="$act=='add'"><input name="task_id" type="hidden" value="{$tid}" /><input name="pro_id" type="hidden" value="{$id}" /><else /><input name="task_id" type="hidden" value="{$info.main.task_id}" /><input name="pro_id" type="hidden" value="{$info.main.pro_id}" /></if></td>
+    <td width="20%"><input name="status" id="status{$uniqid}" class="relo" size="18" /><input name="oldstatus" type="hidden" value="{$info.status}" /></td>
+    <td width="13%"><label for="worktime">工时</label></td>
+    <td width="20%"><input name="worktime" id="worktime{$uniqid}" class="easyui-numberbox" size="8" data-options="precision:1,required:true" /> 小时</td>
+    <td width="13%"><label for="addtime">日期</label></td>
+    <td width="20%"><if condition="$act=='add'">{$dates}<else />{$info.addtime}</if><input name="addtime" type="hidden" value="{$dates}" /></td>
+  </tr>
+  <tr>
+    <td width="14%"><label for="description">日志</label></td>
+    <td height="302" colspan="5">
+    <textarea name="description" id="descriptionID{$uniqid}"  rows="18" class="easyui-kindeditor" style="width:99%; height:292px" data-options="uploadJson:'__APP__/Public/Upload/save/act/worklog'">{$info.description}</textarea>
+    </td>
+  </tr>
+  <tr>
+    <td height="38" colspan="6" align="center"><if condition="$act=='add'"><a href="javascript:void(0);" onclick="javascript:onSubmitWorklog('{$uniqid}')" id="su" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a><else /><a href="javascript:void(0);" onclick="javascript:return onUploadWorklog('{$uniqid}','{$info.id}')" id="sue" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a></if> &nbsp; <a href="javascript:void(0);" onclick="javascript:onResetWorklog('{$uniqid}')" id="re" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a></td>
+  </tr>
+ </table>
+</form>
+</div>

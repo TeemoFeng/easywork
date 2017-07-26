@@ -1,0 +1,28 @@
+<script language="javascript">
+var role = '{$role}';
+if(role==-2){
+	cancel['Logdetail'].dialog('close');
+	cancel['Logdetail'] = null;
+	$.messager.alert('提示','您没有查看权限！','warning');
+}
+
+function onResetLogdetail(idd){
+	cancel['Logdetail'].dialog('close');
+	cancel['Logdetail'] = null;
+}
+</script>
+<div class="con-tb">
+<form class="add-logdetail" method="post">
+ <table class="infobox" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="rebg" width="13%" height="228">详情</td>
+    <td>
+     {$info.description}
+    </td>
+  </tr>
+  <tr>
+    <td height="38" colspan="4" align="center"><a href="javascript:void(0);" onclick="javascript:onResetLogdetail('{$uniqid}')" id="re" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a></td>
+  </tr>
+ </table>
+</form>
+</div>

@@ -1,0 +1,1 @@
+<?php	return array ( 0 => 'id', 1 => 'log_id', 2 => 'pro_id', 3 => 'task_id', 4 => 'worklog_id', 5 => 'files_id', '_autoinc' => true, '_pk' => 'id', '_type' => array ( 'id' => 'bigint(15)', 'log_id' => 'int(11)', 'pro_id' => 'int(8)', 'task_id' => 'int(8)', 'worklog_id' => 'int(11)', 'files_id' => 'int(11)', ), );?>

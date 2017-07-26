@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS `#@_reply_table`;
+CREATE TABLE `#@_reply_table` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `description` text NOT NULL,
+  `addtime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

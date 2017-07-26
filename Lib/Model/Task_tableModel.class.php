@@ -1,0 +1,80 @@
+<?php
+/*
+ * @varsion		EasyWork系统
+ * @package		程序设计深圳市九五时代科技有限公司设计开发
+ * @copyright	Copyright (c) 2010 - 2015, 95era, Inc.
+ * @link		http://www.d-winner.com
+ */
+
+class Task_tableModel extends RelationModel{
+	protected $_link = array(
+		'user'=>array(
+			'mapping_type'=>BELONGS_TO,
+			'mapping_name'=>'user',
+			'class_name'=>'user_table',
+			'foreign_key'=>'user_id',
+			'as_fields'=>'username:username',
+		),
+		'check'=>array(
+			'mapping_type'=>BELONGS_TO,
+			'mapping_name'=>'check',
+			'class_name'=>'user_table',
+			'foreign_key'=>'check_id',
+			'as_fields'=>'username:checkname',
+		),
+		'fromid'=>array(
+			'mapping_type'=>BELONGS_TO,
+			'mapping_name'=>'fromid',
+			'class_name'=>'user_table',
+			'foreign_key'=>'from_id',
+			'as_fields'=>'username:fromname',
+		),
+		'toid'=>array(
+			'mapping_type'=>BELONGS_TO,
+			'mapping_name'=>'toid',
+			'class_name'=>'user_table',
+			'foreign_key'=>'to_id',
+			'as_fields'=>'username:toname',
+		),
+		'baseinfo'=>array(
+			'mapping_type'=>HAS_ONE,
+			'mapping_name'=>'baseinfo',
+			'class_name'=>'task_baseinfo_table',
+			'foreign_key'=>'task_id',
+		),
+		'main'=>array(
+			'mapping_type'=>HAS_ONE,
+			'mapping_name'=>'main',
+			'class_name'=>'task_main_table',
+			'foreign_key'=>'task_id',
+		),
+		'status'=>array(
+			'mapping_type'=>BELONGS_TO,
+			'mapping_name'=>'status',
+			'class_name'=>'linkage',
+			'foreign_key'=>'status',
+			'as_fields'=>'val:statusname',
+		),
+		'level'=>array(
+			'mapping_type'=>BELONGS_TO,
+			'mapping_name'=>'views',
+			'class_name'=>'linkage',
+			'foreign_key'=>'level',
+			'as_fields'=>'val:levelname',
+		),
+		'type'=>array(
+			'mapping_type'=>BELONGS_TO,
+			'mapping_name'=>'type',
+			'class_name'=>'linkage',
+			'foreign_key'=>'type',
+			'as_fields'=>'val:typename',
+		),
+		'degree'=>array(
+			'mapping_type'=>BELONGS_TO,
+			'mapping_name'=>'degree',
+			'class_name'=>'linkage',
+			'foreign_key'=>'degree',
+			'as_fields'=>'val:degreename',
+		),
+	);
+}

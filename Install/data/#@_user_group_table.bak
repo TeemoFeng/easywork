@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS `#@_user_group_table`;
+CREATE TABLE `#@_user_group_table` (
+  `id` int(4) unsigned NOT NULL AUTO_INCREMENT,
+  `_parentId` smallint(6) NOT NULL DEFAULT '0',
+  `name` varchar(16) NOT NULL,
+  `status` tinyint(2) unsigned NOT NULL DEFAULT '1',
+  `access` smallint(5) unsigned NOT NULL DEFAULT '10',
+  `comment` varchar(128) NOT NULL DEFAULT '',
+  `sort` int(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+REPLACE INTO `#@_user_group_table` VALUES ('1','0','超级管理员','0','9999','最高权限角色','0');
+REPLACE INTO `#@_user_group_table` VALUES ('2','0','管理员','1','999','没有菜单设置与系统工具权限','0');
+REPLACE INTO `#@_user_group_table` VALUES ('3','0','项目经理','1','50','没有系统管理权限','0');
+REPLACE INTO `#@_user_group_table` VALUES ('4','0','普通用户','1','40','没有项目管理权限','0');
+REPLACE INTO `#@_user_group_table` VALUES ('5','0','访客','1','30','只有查看功能','0');
+REPLACE INTO `#@_user_group_table` VALUES ('6','0','客户','1','10','只能看到自己所属的项目','0');

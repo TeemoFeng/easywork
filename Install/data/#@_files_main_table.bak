@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS `#@_files_main_table`;
+CREATE TABLE `#@_files_main_table` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pro_id` mediumint(8) NOT NULL DEFAULT '0',
+  `task_id` int(11) NOT NULL DEFAULT '0',
+  `files_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `pro_id` (`pro_id`) USING BTREE,
+  KEY `files_id` (`files_id`) USING BTREE,
+  KEY `task_id` (`task_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

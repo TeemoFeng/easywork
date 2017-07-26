@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS `#@_files_path_table`;
+CREATE TABLE `#@_files_path_table` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `files_id` int(11) NOT NULL DEFAULT '0',
+  `path` varchar(180) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `files_id` (`files_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

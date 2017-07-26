@@ -1,0 +1,149 @@
+<script language="javascript">
+var act = '{$act}';
+
+function onDelWorklog(id,tid,pid){
+	$.messager.confirm('提示','确定刪除该工作日志吗！',function(r){
+		if(r==true){
+			$.messager.progress();
+			$.post('__URL__/worklog/act/del/go/1', {worklog_id:id,task_id:tid,pro_id:pid}, function(data){
+				$.messager.progress('close');
+				if(data==1){
+					$.messager.alert('提示','删除数据成功！','info',function(){
+						$("#proDetailCon").panel('refresh');
+						cancel['Worklog'].dialog('destroy');
+						cancel['Worklog'].dialog('close');
+						cancel['Worklog'] = null;
+					});
+				}else if(data==2){
+					$.messager.alert('提示','该任务已审核，不能删除工作日志！','warning');
+				}else if(data==0){
+					$.messager.alert('提示','删除数据失败！','warning');
+				}else{
+					$.messager.alert('提示','您没有删除权限！','warning');
+				}
+			});
+		}
+	});
+}
+
+function toEditWorklog(id){
+	cancel['Worklog'].dialog('refresh','__URL__/worklog/act/edit/id/'+id);
+	cancel['Worklog'].dialog('setTitle','编辑工作日志');
+}
+
+function onAddWorkReply(idd){
+	var reply = $("#reply"+idd).val();
+	if(reply){
+		$.messager.progress();
+		$("#addFormWorklog"+idd).form('submit',{
+			url:'__URL__/workreply/act/add/go/1',
+			onSubmit: function(){
+				var isValid = $(this).form('validate');
+				if (!isValid){
+					$.messager.progress('close');
+				}
+				return isValid;
+			},
+			success:function(data){
+				$.messager.progress('close');
+				if(data==1){
+					$.messager.alert('提示','新增评论成功！','info',function(){
+						cancel['Worklog'].dialog('refresh');
+					});
+				}else if(data==0){
+					$.messager.alert('提示','新增评论失败！','warning');
+				}else{
+					$.messager.alert('提示','您没有评论权限！','warning');
+				}
+			}
+		});
+	}
+}
+
+function onDelWorkReply(idd,id){
+	$.messager.confirm('提示','确定删除该评论吗！',function(r){
+		if(r==true){
+			$.messager.progress();
+			$.get('__URL__/workreply/act/del/go/1/id/'+id, function(data){
+				$.messager.progress('close');
+				if(data==1){
+					$.messager.alert('提示','删除评论成功！','info',function(){
+						cancel['Worklog'].dialog('refresh');
+					});
+				}else if(data==0){
+					$.messager.alert('提示','删除评论失败！','warning');
+				}else{
+					$.messager.alert('提示','您没有删除权限！','warning');
+				}
+			});
+		}
+	});
+}
+
+function onResetWorklog(idd){
+	cancel['Worklog'].dialog('destroy');
+	cancel['Worklog'].dialog('close');
+	cancel['Worklog'] = null;
+}
+
+function toPage(url){
+	cancel['Worklog'].dialog('refresh',url);
+}
+</script>
+<div class="con-tb">
+<form class="add-worklog" id="addFormWorklog{$uniqid}" method="post">
+ <table class="infobox" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" class="rebg"><label for="status">状态</label><input name="worklog_id" type="hidden" value="{$info.id}" /><input name="task_id" type="hidden" value="{$info.main.task_id}" /><input name="pro_id" type="hidden" value="{$info.main.pro_id}" /></td>
+    <td width="20%">{$info.statusname}</td>
+    <td width="13%" class="rebg"><label for="worktime">工时</label></td>
+    <td width="20%"><?php echo roundnum($info['worktime']); ?> 小时</td>
+    <td width="13%" class="rebg"><label for="addtime">日期</label></td>
+    <td width="20%">{$info.addtime}</td>
+  </tr>
+  <tr>
+    <td width="14%" rowspan="2" class="rebg"><label for="description">日志</label></td>
+    <td height="71" colspan="5">
+     {$info.description}
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5"><a href="javascript:void(0);" onclick="javascript:return toEditWorklog('{$info.id}')" class="font1_color">[编辑]</a>&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:onDelWorklog('{$info.id}','{$info.main.task_id}','{$info.main.pro_id}')" class="font1_color">[刪除]</a>&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:onResetWorklog('{$uniqid}')" class="font1_color">[关闭]</a></td>
+  </tr>
+  <if condition="$rinfo">
+  <tr>
+   <td colspan="6">
+      <div class="detail-tit" style="margin-top:8px; padding-left:3px;">评论</div> 
+      <table class="infobox table-border" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:-2px;">
+       <?php
+        foreach($rinfo as $k=>$t){
+         if($k%2==0){
+            $cls = 'class="rebg5"';
+         }else{
+            $cls = '';
+         }
+       ?>
+        <tr>
+            <td height="46" {$cls}>
+             <div class="tpt"><span class="rpl">{$t.username} 于	 {$t.addtime} 发表的评论</span><span class="rpr"><if condition="$userid==$t['user_id'] || in_array('a',$role) || $role=='all'"><a href="javascript:onDelWorkReply('{$uniqid}','{$t.id}');">[刪除]</a></if></span></div>
+             <div class="tpc">{$t.description}</div>
+            </td>
+       </tr>
+      <?php
+       }
+      ?> 
+      </table>
+      <div class="pages" style="margin-bottom:8px;">{$showpage}</div>
+   </td>
+  </tr>
+  </if>
+  <tr>
+    <td width="14%" height="246" class="rebg"><label for="reply">发表评论</label></td>
+    <td colspan="5">
+     <textarea name="reply" id="reply{$uniqid}"  rows="18" class="easyui-kindeditor" style="width:99%; height:203px" data-options="uploadJson:'__APP__/Public/Upload/save/'"></textarea>
+     <div style="text-align:right; margin-top:5px;"><a href="javascript:void(0);" onclick="javascript:return onAddWorkReply('{$uniqid}')" id="su" class="easyui-linkbutton" data-options="iconCls:'icon-save'">立即发表</a>&nbsp; </div>
+    </td>
+  </tr>
+ </table>
+</form>
+</div>

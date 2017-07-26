@@ -1,0 +1,3 @@
+<?php
+//000000000000s:661:"SELECT SQL_CALC_FOUND_ROWS t1.id as id,t1.username as username,t1.email as email,t1.login_count as login_count,t1.last_visit as last_visit,t1.status as t1_old_status,IF(t1.status=1,'开启','关闭') as t1_new_status,t5.group_id as group_id,t2.name as group_name,t3.name as part_name,t4.name as comy_name,t4.type as type FROM dwin_user_table as t1 LEFT JOIN  dwin_user_main_table as t5 on t5.user_id = t1.id LEFT JOIN  dwin_user_group_table as t2 on t2.id = t5.group_id LEFT JOIN  dwin_user_part_table as t3 on t3.id = t5.part_id LEFT JOIN  dwin_user_company_table as t4 on t4.id = t5.company_id HAVING id>0 ORDER BY convert(username using gbk) asc LIMIT 0,50  ";
+?>
